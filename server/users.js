@@ -10,13 +10,10 @@ function getRandomColor() {
 }
 
 const addUser = ({ id, name }) => {
-
     let color = getRandomColor()
+    name = name.trim().toUpperCase()
 
-    const exitstingUser = users.find((user) => {
-        user.name === name
-    })
-
+    const exitstingUser = users.find((user) => user.name === name)
     if (exitstingUser) {
         return { error: 'Username is taken' }
     }
@@ -45,8 +42,8 @@ const getAllUser = () => {
     return users
 }
 
-const getUserById = (id) => {
-    return users.find((user) => user.id === id)
+const getAdmin = () => {
+    return users[0]
 }
 
-module.exports = { addUser, removeUser, getUser, getAllUser, getUserById }
+module.exports = { addUser, removeUser, getUser, getAllUser, getAdmin }

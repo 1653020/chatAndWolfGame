@@ -6,11 +6,14 @@ const PORT = process.env.PORT || 5000;
 
 const router = require('./router')
 
-const { addUser, removeUser, getUser, getAllUser, getUserById } = require('./users')
+const { addUser, removeUser, getUser, getAllUser } = require('./users')
 
 const app = express();
 const server = http.createServer(app)
-const io = socketio(server);
+const io = socketio(server, {
+    pingInterval: 6000000,
+    pingTimeout: 6000000,
+});
 
 io.on('connection', (socket) => {
     console.log('We have a new connection!!')
@@ -26,7 +29,7 @@ io.on('connection', (socket) => {
         socket.join('GHOLX')
 
         const users = getAllUser()
-        io.to('GHOLX').emit('getAllUser', { user: users })
+        io.to('GHOLX').emit('getAllUser', { user: users, admin: users[0].name })
         callback()
     })
 
@@ -41,9 +44,9 @@ io.on('connection', (socket) => {
         const user = getUser(socket.id)
         removeUser(socket.id)
         const users = getAllUser()
-        if (user) {
+        if (users && users[0] && user) {
             socket.broadcast.to('GHOLX').emit('message', { user: 'admin', text: `${user.name}, had left!` })
-            io.to('GHOLX').emit('updateUser', { user: users })
+            io.to('GHOLX').emit('updateUser', { user: users, admin: users[0].name })
         }
     })
 
@@ -51,7 +54,13 @@ io.on('connection', (socket) => {
         removeUser(socket.id)
         const users = getAllUser()
         socket.broadcast.to('GHOLX').emit('message', { user: 'admin', text: `${userName}, had left!` })
-        io.to('GHOLX').emit('updateUser', { user: users })
+        if (users && users[0]) {
+            io.to('GHOLX').emit('updateUser', { user: users, admin: users[0].name })
+        }
+    })
+
+    socket.on('reconnected', (name, callback) => {
+        console.log(name, ' reconnected!')
     })
 })
 

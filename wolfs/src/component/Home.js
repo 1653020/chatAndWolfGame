@@ -4,10 +4,12 @@ import { useDispatch, useSelector } from 'react-redux'
 import { Input, Button, Avatar, Tooltip } from 'antd';
 import io from 'socket.io-client'
 import ScrollToBottom from 'react-scroll-to-bottom'
+import { SettingFilled } from '@ant-design/icons'
+import Drawer from './Drawer'
 
 let socket;
 
-const Home = ({ setIsLogin }) => {
+const Home = () => {
 
     const userName = useSelector(state => state.auth.userName)
     const dispatch = useDispatch();
@@ -16,15 +18,21 @@ const Home = ({ setIsLogin }) => {
     const [messages, setMessages] = useState([])
     const [messageTemp, setMessageTemp] = useState('')
     const [listUser, setListUser] = useState(null)
+    const [isAdmin, setIsAdmin] = useState(false)
+    const [visible, setVisible] = useState(false)
 
     useEffect(() => {
         socket = io(ENDPOINT)
-        socket.emit('join', userName, () => {
-
+        socket.emit('join', userName, (error) => {
+            if (error) {
+                window.alert('Please choose another Username')
+                handleLogOut()
+            }
         })
 
         return () => {
         }
+        // eslint-disable-next-line
     }, [])
 
     useEffect(() => {
@@ -34,18 +42,20 @@ const Home = ({ setIsLogin }) => {
             setMessages([].concat(temp))
         })
 
-        socket.on('getAllUser', (user) => {
-            setListUser([].concat(user.user))
+        socket.on('getAllUser', (data) => {
+            setListUser([].concat(data.user))
+            if (data.admin === userName.toUpperCase()) setIsAdmin(true)
         })
 
-        socket.on('updateUser', (user) => {
-            setListUser([].concat(user.user))
+        socket.on('updateUser', (data) => {
+            setListUser([].concat(data.user))
+            if (data.admin === userName.toUpperCase()) setIsAdmin(true)
         })
+
+        socket.on('disconnect', () => {
+        })
+        // eslint-disable-next-line
     }, [])
-
-    useEffect(() => {
-        console.log(listUser)
-    }, [listUser])
 
     const handleLogOut = () => {
         socket.emit('disconnected', userName)
@@ -69,24 +79,35 @@ const Home = ({ setIsLogin }) => {
         setMessageTemp(value)
     }
 
-    const getRandomColor = () => {
-        var letters = '0123456789ABCDEF';
-        var color = '#';
-        for (var i = 0; i < 6; i++) {
-            color += letters[Math.floor(Math.random() * 16)];
-        }
-        return color;
+    const closeDrawer = () => {
+        setVisible(false)
+    }
+
+    const settingClick = () => {
+        setVisible(true)
     }
 
     return (
         <>
+            <Drawer visible={visible} onClose={closeDrawer} />
             <div className='headerName' style={{ padding: '20px', display: 'flex', flexDirection: 'row' }}>
                 <h2>
                     Hello {userName}
                 </h2>
                 <Button onClick={handleLogOut}>Đăng xuất</Button>
             </div>
+            <div className='listUser'>
+                <Avatar.Group maxCount={5} maxStyle={{ color: '#f56a00', backgroundColor: '#fde3cf' }}>
+                    {listUser ? listUser.map((data, index) => <Tooltip key={index} title={data.name} placement="top">
+                        <Avatar style={{ backgroundColor: `${data.color}` }}>{data.name}</Avatar>
+                    </Tooltip>) : <></>}
 
+                </Avatar.Group>
+                {isAdmin ? <div>
+                    <Button onClick={settingClick} style={{ margin: '0 5px' }} icon={<SettingFilled />} />
+                    <Button type="primary">Start</Button>
+                </div> : <></>}
+            </div>
             <ScrollToBottom className={'chatBox'}>
                 {messages ? messages.map((data, index) => {
                     if (data.user === 'admin') {
@@ -99,7 +120,7 @@ const Home = ({ setIsLogin }) => {
                         )
                     }
                     else
-                        if (data.user === userName) {
+                        if (data.user === userName.toUpperCase()) {
                             return (
                                 <li key={index}>
                                     <div className='textMessageCurrent'>
@@ -129,21 +150,11 @@ const Home = ({ setIsLogin }) => {
             <div className={'chatInput'}>
                 <Input
                     placeholder="Chat"
-                    enterButton="Search"
                     size="large"
                     onChange={(e) => handleChatInput(e.target.value)}
                     value={messageTemp}
                 />
                 <Button onClick={eventSendMessage} type="primary">Send</Button>
-            </div>
-
-            <div className='listUser'>
-                <Avatar.Group maxCount={5} maxStyle={{ color: '#f56a00', backgroundColor: '#fde3cf' }}>
-                    {listUser ? listUser.map(data => <Tooltip title={data.name} placement="top">
-                        <Avatar style={{ backgroundColor: `${data.color}` }}>{data.name}</Avatar>
-                    </Tooltip>) : <></>}
-
-                </Avatar.Group>
             </div>
         </>
     )
