@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { Input } from 'antd';
 import { UserOutlined } from '@ant-design/icons';
 import { LoginAction } from '../actions/auth'
@@ -20,6 +20,10 @@ const Login = () => {
         }
         else window.alert('Please input UserName!')
     }
+
+    useEffect(() => {
+        setUserName(localStorage.getItem('userName'))
+    }, [])
 
     const handleOnChangeUserName = (value) => {
         setUserName(value)
@@ -53,7 +57,7 @@ const Login = () => {
 
                 <h2>Login</h2>
                 <div>
-                    <Input placeholder="Name" prefix={<UserOutlined />} onChange={(e) => handleOnChangeUserName(e.target.value)} onPressEnter={loginHandle} />
+                    <Input placeholder="Name" value={userName} prefix={<UserOutlined />} onChange={(e) => handleOnChangeUserName(e.target.value)} onPressEnter={loginHandle} />
                 </div>
                 <Button size='large' onClick={loginHandle} type="primary">Go</Button>
             </div>

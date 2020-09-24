@@ -53,6 +53,7 @@ const Home = () => {
         })
 
         socket.on('disconnect', () => {
+            window.location.reload()
         })
         // eslint-disable-next-line
     }, [])
@@ -63,7 +64,6 @@ const Home = () => {
         const action = LogOutAction()
         dispatch(action)
         localStorage.removeItem('isLogin')
-        localStorage.removeItem('userName')
     }
 
     const eventSendMessage = () => {
