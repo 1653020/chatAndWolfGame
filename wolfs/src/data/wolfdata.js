@@ -1,6 +1,8 @@
 /**Làng */
 import danlang from '../assets/imageData/danlang.jpg'
 import baove from '../assets/imageData/baove.jpg'
+import phuthuy from '../assets/imageData/phuthuy.jpg'
+import duocsi from '../assets/imageData/duocsi.png'
 import conqua from '../assets/imageData/conqua.jpeg'
 import cao from '../assets/imageData/cao.png'
 import baanhem from '../assets/imageData/baanhem.png'
@@ -10,6 +12,13 @@ import cupid from '../assets/imageData/cupid.jpg'
 import gialang from '../assets/imageData/gialang.jpg'
 import hiepsikiemgi from '../assets/imageData/hiepsikiemgi.png'
 import nguoidaytotantuy from '../assets/imageData/nguoidaytotantuy.jpg'
+import thangngoc from '../assets/imageData/thangngoc.jpg'
+import thethan from '../assets/imageData/thethan.jpg'
+import thiensu from '../assets/imageData/thiensu.png'
+import thosan from '../assets/imageData/thosan.jpg'
+import tientri from '../assets/imageData/tientri.jpg'
+import tihi from '../assets/imageData/tihi.jpg'
+import thamphanlapbap from '../assets/imageData/thamphanlapbap.png'
 
 const wolfdata = {
     phedan: [
