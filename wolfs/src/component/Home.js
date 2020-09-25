@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { LogOutAction } from '../actions/auth'
 import { useDispatch, useSelector } from 'react-redux'
-import { Input, Button, Avatar, Tooltip } from 'antd';
+import { Input, Button, Avatar, Tooltip, Switch } from 'antd';
 import io from 'socket.io-client'
 import ScrollToBottom from 'react-scroll-to-bottom'
 import { SettingFilled } from '@ant-design/icons'
@@ -19,7 +19,8 @@ const Home = () => {
     const [messageTemp, setMessageTemp] = useState('')
     const [listUser, setListUser] = useState(null)
     const [isAdmin, setIsAdmin] = useState(false)
-    const [visible, setVisible] = useState(false)
+    const [visible, setVisible] = useState(true)
+    const [darkTheme, setDarkThem] = useState('')
 
     useEffect(() => {
         socket = io(ENDPOINT)
@@ -87,14 +88,24 @@ const Home = () => {
         setVisible(true)
     }
 
+    const handleDarkTheme = () => {
+        if (darkTheme === '')
+            setDarkThem('dark')
+        else
+            setDarkThem('')
+    }
+
     return (
-        <>
+        <div className={`contentContainer ${darkTheme}`} >
             <Drawer visible={visible} onClose={closeDrawer} />
             <div className='headerName' style={{ padding: '20px', display: 'flex', flexDirection: 'row' }}>
                 <h2>
                     Hello {userName}
                 </h2>
-                <Button onClick={handleLogOut}>Đăng xuất</Button>
+                <div>
+                    <Switch style={{ margin: '0 10px' }} onChange={handleDarkTheme} />
+                    <Button onClick={handleLogOut}>Đăng xuất</Button>
+                </div>
             </div>
             <div className='listUser'>
                 <Avatar.Group maxCount={5} maxStyle={{ color: '#f56a00', backgroundColor: '#fde3cf' }}>
@@ -156,7 +167,7 @@ const Home = () => {
                 />
                 <Button onClick={eventSendMessage} type="primary">Send</Button>
             </div>
-        </>
+        </div>
     )
 }
 export default Home

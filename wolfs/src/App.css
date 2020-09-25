@@ -105,7 +105,10 @@
     overflow: hidden;
 }
 
-.chatBox {
+
+/*Home Page*/
+
+.contentContainer .chatBox {
     width: 300px;
     height: 300px;
     overflow: auto;
@@ -113,9 +116,10 @@
     border-radius: 5px;
     padding: 20px;
     box-shadow: 0 2.8px 2.2px rgba(0, 0, 0, 0.02), 0 6.7px 5.3px rgba(0, 0, 0, 0.028), 0 12.5px 10px rgba(0, 0, 0, 0.035), 0 22.3px 17.9px rgba(0, 0, 0, 0.042), 0 41.8px 33.4px rgba(0, 0, 0, 0.05), 0 100px 80px rgba(0, 0, 0, 0.07);
+    transition: all 1s;
 }
 
-.chatBox li {
+.contentContainer .chatBox li {
     list-style: none;
     font-weight: bold;
     display: flex;
@@ -123,7 +127,7 @@
     margin: 10px 0;
 }
 
-.chatBox li .userNameChat {
+.contentContainer .chatBox li .userNameChat {
     width: 30px;
     height: 30px;
     border-radius: 50%;
@@ -134,14 +138,15 @@
     display: flex;
 }
 
-.chatBox li .textMessage {
+.contentContainer .chatBox li .textMessage {
     width: 80%;
     height: 30px;
     align-items: center;
     display: flex;
+    transition: all 1s;
 }
 
-.chatBox li .userNameChatCurrent {
+.contentContainer .chatBox li .userNameChatCurrent {
     width: 30px;
     height: 30px;
     border-radius: 50%;
@@ -152,19 +157,20 @@
     display: flex;
 }
 
-.chatBox li .textMessageCurrent {
+.contentContainer .chatBox li .textMessageCurrent {
     width: 80%;
     height: 30px;
     align-items: center;
     justify-content: flex-end;
     display: flex;
+    transition: all 1s;
 }
 
-.chatBox li .textMessageAdmin {
+.contentContainer .chatBox li .textMessageAdmin {
     color: red;
 }
 
-.chatInput {
+.contentContainer .chatInput {
     display: flex;
     flex-direction: row;
     height: 30px;
@@ -172,25 +178,31 @@
     width: 300px;
 }
 
-.chatInput .ant-btn {
+.contentContainer .chatInput .ant-btn {
     height: 30px;
     margin-left: 5px;
     border-radius: 5px;
     box-shadow: 0 2.8px 2.2px rgba(0, 0, 0, 0.02), 0 6.7px 5.3px rgba(0, 0, 0, 0.028), 0 12.5px 10px rgba(0, 0, 0, 0.035), 0 22.3px 17.9px rgba(0, 0, 0, 0.042), 0 41.8px 33.4px rgba(0, 0, 0, 0.05), 0 100px 80px rgba(0, 0, 0, 0.07);
 }
 
-.chatInput .ant-input.ant-input-lg {
+.contentContainer .chatInput .ant-input.ant-input-lg {
     border-radius: 5px;
     box-shadow: 0 2.8px 2.2px rgba(0, 0, 0, 0.02), 0 6.7px 5.3px rgba(0, 0, 0, 0.028), 0 12.5px 10px rgba(0, 0, 0, 0.035), 0 22.3px 17.9px rgba(0, 0, 0, 0.042), 0 41.8px 33.4px rgba(0, 0, 0, 0.05), 0 100px 80px rgba(0, 0, 0, 0.07);
 }
 
-.headerName {
+.contentContainer .headerName {
     width: 100%;
     position: fixed;
     z-index: 1;
     background: white;
     top: 0;
     justify-content: space-around;
+    transition: all 1s;
+}
+
+.contentContainer .headerName h2 {
+    text-transform: uppercase;
+    transition: all 1s;
 }
 
 .listUser {
@@ -208,4 +220,68 @@
     background: #b9b9b9;
     padding: 10px;
     border-radius: 10px;
+}
+
+.contentContainer {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    background: #ffffff;
+    transition: all 1s;
+}
+
+
+/*Dark Theme*/
+
+.contentContainer.dark {
+    background: #363636;
+}
+
+.contentContainer.dark .headerName {
+    background: #000000;
+    box-shadow: 0 2.8px 2.2px rgba(230, 230, 230, 0.02), 0 6.7px 5.3px rgba(230, 230, 230, 0.02), 0 12.5px 10px rgba(230, 230, 230, 0.02), 0 22.3px 17.9px rgba(230, 230, 230, 0.02), 0 41.8px 33.4px rgba(230, 230, 230, 0.02), 0 100px 80px rgba(230, 230, 230, 0.02);
+}
+
+.contentContainer.dark .headerName h2 {
+    color: white;
+}
+
+.contentContainer.dark .chatBox {
+    background: #363636;
+    box-shadow: 9px 9px 21px #242424, -9px -9px 21px #484848;
+}
+
+.contentContainer.dark .chatBox li .textMessageCurrent {
+    color: white;
+}
+
+.contentContainer.dark .chatBox li .textMessage {
+    color: white;
+}
+
+.drawerSetting .danLang {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+}
+
+.drawerSetting .danLang .ant-card {
+    margin: 10px 10px;
+}
+
+.drawerSetting .danLang .ant-card-body {
+    height: 200px;
+    overflow: auto;
+}
+
+.cardChosen .ant-card-body {
+    height: 0;
+    padding: 0;
+}
+
+.drawerSetting .cardChosenContainer {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
 }
