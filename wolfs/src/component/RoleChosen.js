@@ -1,9 +1,19 @@
 import React from 'react'
 import { Card } from 'antd';
-import { LeftOutlined, RightOutlined } from '@ant-design/icons'
+import { LeftOutlined, RightOutlined, CloseOutlined } from '@ant-design/icons'
 
 const RoleChosen = ({ data, increaseAmount, decreaseAmount }) => {
-    console.log('chosen: ', data)
+    const buttonIncrease = (data) => {
+        if (data.title === 'Dân Làng' || data.title === 'Sói Thường')
+            return (<RightOutlined onClick={() => increaseAmount(data)} />)
+    }
+
+    const buttonDelete = (data) => {
+        if ((data.title === 'Dân Làng' || data.title === 'Sói Thường') && data.amount > 1)
+            return <LeftOutlined onClick={() => decreaseAmount(data)} />
+        else return <CloseOutlined onClick={() => decreaseAmount(data)} />
+    }
+
     return (
         <div className='cardChosenContainer'>
             {(data && data.length) ? data.map((data, index) =>
@@ -14,9 +24,9 @@ const RoleChosen = ({ data, increaseAmount, decreaseAmount }) => {
                     style={{ width: 150 }}
                     cover={<img alt="example" src={data.image} />}
                     actions={[
-                        <LeftOutlined onClick={() => decreaseAmount(data)} />,
+                        buttonDelete(data),
                         <h3>{data.amount}</h3>,
-                        <RightOutlined onClick={() => increaseAmount(data)} />
+                        buttonIncrease(data)
                     ]}
                 />
             ) : <></>}

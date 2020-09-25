@@ -262,18 +262,46 @@
     color: white;
 }
 
+
+/*drawer*/
+
 .drawerSetting .danLang {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
 }
 
-.drawerSetting .danLang .ant-card {
+.drawerSetting .phesoi {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+}
+
+.drawerSetting .phethu3 {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+}
+
+.drawerSetting .phetuychon {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+}
+
+.drawerSetting .ant-card {
     margin: 10px 10px;
 }
 
-.drawerSetting .danLang .ant-card-body {
-    height: 200px;
+.drawerSetting .ant-card-body {
+    padding: 10px;
+    height: 100px;
     overflow: auto;
+}
+
+.drawerSetting .ant-card-meta-description {
+    font-size: smaller;
+}
+
+.drawerSetting .cardChosenContainer {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
 }
 
 .cardChosen .ant-card-body {
@@ -281,7 +309,8 @@
     padding: 0;
 }
 
-.drawerSetting .cardChosenContainer {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+.drawerSetting .cardChosenContainer .ant-card-actions {
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }

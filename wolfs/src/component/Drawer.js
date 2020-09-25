@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import { Drawer, Button } from 'antd';
 import DataWolf from '../data/wolfdata'
 import { Card } from 'antd';
-import { PlusOutlined } from '@ant-design/icons'
+import { PlusOutlined, MinusOutlined } from '@ant-design/icons'
 import RoleChosen from './RoleChosen'
 
 const { Meta } = Card;
@@ -63,6 +63,20 @@ const DrawerComponent = ({ visible, onClose }) => {
         console.log(setting)
     }
 
+    const buttonPlusOrMinus = (data) => {
+        if (data.title !== 'Dân Làng' && data.title !== 'Sói Thường') {
+            let temp = setting
+            let position = searchPosition(temp, data)
+            if (position === false)
+                return <PlusOutlined onClick={() => handleAddRole(data)} />
+            else {
+                return <MinusOutlined onClick={() => decreaseAmount(temp[position])} />
+            }
+        } else {
+            return <PlusOutlined onClick={() => handleAddRole(data)} />
+        }
+    }
+
     return (
         <Drawer
             className='drawerSetting'
@@ -77,9 +91,10 @@ const DrawerComponent = ({ visible, onClose }) => {
                 <Button onClick={saveSetting} type='primary'>Save</Button>
             </div>}
         >
-            <h2>Các role đã chọn</h2>
+            <h2 style={{ width: '110%', padding: '10px', background: '#dddddd', margin: '0 -24px' }}>Các role đã chọn</h2>
             <RoleChosen data={setting} increaseAmount={increaseAmount} decreaseAmount={decreaseAmount} />
-            <h2>Phe Dân</h2>
+
+            <h2 style={{ width: '110%', padding: '10px', background: '#dddddd', margin: '0 -24px' }}>Phe Dân</h2>
             <div className='danLang'>
                 {DataWolf.phedan.map((data, index) => <Card
                     key={index}
@@ -87,7 +102,52 @@ const DrawerComponent = ({ visible, onClose }) => {
                     style={{ width: 150 }}
                     cover={<img alt="example" src={data.image} />}
                     actions={[
-                        <PlusOutlined onClick={() => handleAddRole(data)} /> //add role
+                        buttonPlusOrMinus(data) //add role
+                    ]}
+                >
+                    <Meta title={data.title} description={data.description} />
+                </Card>)}
+            </div>
+
+            <h2 style={{ width: '110%', padding: '10px', background: '#dddddd', margin: '0 -24px' }}>Phe Sói</h2>
+            <div className='phesoi'>
+                {DataWolf.phesoi.map((data, index) => <Card
+                    key={index}
+                    hoverable
+                    style={{ width: 150 }}
+                    cover={<img alt="example" src={data.image} />}
+                    actions={[
+                        buttonPlusOrMinus(data) //add role
+                    ]}
+                >
+                    <Meta title={data.title} description={data.description} />
+                </Card>)}
+            </div>
+
+            <h2 style={{ width: '110%', padding: '10px', background: '#dddddd', margin: '0 -24px' }}>Phe Thứ 3</h2>
+            <div className='phethu3'>
+                {DataWolf.phethu3.map((data, index) => <Card
+                    key={index}
+                    hoverable
+                    style={{ width: 150 }}
+                    cover={<img alt="example" src={data.image} />}
+                    actions={[
+                        buttonPlusOrMinus(data) //add role
+                    ]}
+                >
+                    <Meta title={data.title} description={data.description} />
+                </Card>)}
+            </div>
+
+            <h2 style={{ width: '110%', padding: '10px', background: '#dddddd', margin: '0 -24px' }}>Phe Tùy Chọn</h2>
+            <div className='phetuychon'>
+                {DataWolf.phetuychon.map((data, index) => <Card
+                    key={index}
+                    hoverable
+                    style={{ width: 150 }}
+                    cover={<img alt="example" src={data.image} />}
+                    actions={[
+                        buttonPlusOrMinus(data) //add role
                     ]}
                 >
                     <Meta title={data.title} description={data.description} />
